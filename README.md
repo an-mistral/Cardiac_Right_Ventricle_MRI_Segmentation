@@ -1,1 +1,1 @@
-# Cardiac_Right_Ventricle_MRI_Segmentation
+# Right Ventricle Segmentation in Cardiac MRI
