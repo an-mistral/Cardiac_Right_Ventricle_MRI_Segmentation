@@ -32,7 +32,10 @@ Separate models were trained for SA and LA subsets to account for view-specific 
 
 
 ## Project Workflow
-
+- **Data Preprocessing & Augmentation**
+- **Model Architecture**
+- **Training Setup**
+- **Evaluation**
 
 ## Results
 
