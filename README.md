@@ -1,30 +1,38 @@
 # Right Ventricle Segmentation in Cardiac MRI
-
 ## Project Overview
-**Objective:** Automate the segmentation of the right ventricle (RV) in cardiac MRI scans (both short-axis and long-axis views) using advanced deep learning techniques.
+This project implements automated **right ventricle (RV) segmentation** in **cardiac MRI**. The RV plays a key role in circulation by pumping deoxygenated blood to the lungs, yet it has historically received less attention than the left ventricle in segmentation research due to its thin wall and irredular/complex geometry (often referred to as the “forgotten ventricle”). RV morphology and function can be prognostically relevant in several cardiac conditions (e.g., congenital arrhythmogenesis, right-ventricular cardiomyopathy), and more precise RV quantification could support earlier diagnosis and monitoring.
 
-**Significance:** Accurate RV segmentation is crucial for evaluating heart function and detecting diseases, yet it is challenging due to the RV’s thin walls and complex shape (often called the “forgotten ventricle” in cardiac imaging).
-
-**Approach:** Developed a lightweight 3D Transformer-based model (SegFormer3D architecture) tailored for RV segmentation. The model was trained and evaluated on a multi-center MRI dataset, demonstrating robust performance across varied scanners and cardiac conditions.
-
-## Project Overview
-- **Task:** Right ventricle (RV) segmentation in cardiac MRI (binary mask), trained/evaluated separately for **short-axis (SA)** and **long-axis (LA)** views.
-- **Clinical motivation:** RV quantification is clinically relevant, yet RV segmentation is challenging due to **thin walls** and **complex geometry** (“forgotten ventricle”).
-- **Method:** Compact **SegFormer3D-inspired** model (Perera et al., 2024):
-  - 4-stage Transformer encoder with **overlapping 3×3×3** patch embedding (stride **(2,2,1)**), **no positional embeddings**
-  - lightweight **all-MLP decoder** with multi-scale fusion + upsampling to input resolution
-- **Data:** **M&Ms-2** public challenge dataset — **360** annotated studies, multi-center (**3** centers, **9** scanners), multi-disease (**8** pathologies), **SA/LA** views.
-- **Outcome:** Strong performance on **LA** and moderate performance on **SA** under the same evaluation protocol (see Results).
-
+The segmentation approach is a **compact SegFormer3D-based** model inspired by Perera et al. (2024), using a **4-stage hierarchical Transformer encoder** and a **lightweight MLP-style decoder** to produce RV masks. The model is trained and evaluated on the public **M&Ms-2** challenge dataset, with results reported separately for short-axis (SA) and long-axis (LA) views.
 
 ## Repository Structure
 `RV Segmentation Code.ipynb`: Jupyter Notebook containing the full project code (data loading, model definition, training pipeline, and evaluation).
 
-`RV Segmentation Presentation.pdf`: Slide deck summarizing the project’s motivation, approach, and key findings *(useful for a quick overview)*.
-
 `RV Segmentation Report.pdf`: Comprehensive report detailing the project’s background, methodology, experiments, and results.
+
+`RV Segmentation Presentation.pdf`: Project presentation slides. *(useful for a quick overview)*.
 
 `References.bib`: BibTeX file listing literature references cited in the report.
 
+## Data Description
+**Dataset:** Multi-Disease, Multi-View & Multi-Center Right Ventricular Segmentation in Cardiac MRI (M&Ms-2) – a public challenge dataset for RV segmentation, released by the University of Barcelona (2021).
+
+**Scope:** 360 cardiac MRI studies (patient scans) from 3 different health centers (acquired on 9 MRI scanners), covering patients with 8 different cardiac conditions and healthy controls.
+
+**Views:** Each study provides two complementary imaging orientations:
+  - Short-Axis (SA): a stack of 2D slices in cross-section.
+  - Long-Axis (LA): a cine long-axis view.
+
+Separate models were trained for SA and LA subsets to account for view-specific image characteristics.
+
+**Annotations:** All scans include expert-labeled RV segmentation masks, used as ground truth for supervised learning.
+
+**Data split used:** 144/144/72 studies for train/validation/test.
+
+## Project Workflow
+
+## Results
+
+## Contribution ???? 
+
 ## References
-Full references for all cited works are provided in the `References.bib` file.
+All external sources used in this project are cited in `RV Segmentation Report.pdf`. The complete BibTeX list is available in `References.bib`.
