@@ -38,7 +38,15 @@ The segmentation approach is a **compact SegFormer3D-based** model inspired by P
 ## Results
 
 
-## Contribution ???? 
+
+
+## My Contributions
+> Team project — the bullets below reflect my individual contributions.
+
+- Implemented the segmentation model architecture (the `Model` section) in `RV Segmentation Code.ipynb`: SegFormer3D-inspired encoder–decoder (4-stage hierarchical Transformer encoder + lightweight MLP-style decoder).
+- Built model sanity-check utilities: forward-pass validation, tensor shape checks, and output consistency checks.
+- Collaborated with teammates to integrate the model into a PyTorch/MONAI pipeline, employing TorchIO augmentations and training separate models for LA/SA views.
+- Authored the report section “SegFormer3D Model Architecture” in `RV Segmentation Report.pdf`.
 
 
 ## References
