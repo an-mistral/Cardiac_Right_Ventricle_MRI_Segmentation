@@ -8,7 +8,7 @@ The segmentation approach is a **compact SegFormer3D-based** model inspired by P
 ## Repository Structure
 `RV Segmentation Code.ipynb`: Jupyter Notebook containing the full project code (data loading, model definition, training pipeline, and evaluation).
 
-`RV Segmentation Report.pdf`: Comprehensive report detailing the project’s background, methodology, experiments, and results.
+`RV Segmentation Report.pdf`: Comprehensive report detailing the project’s background, methodology, experiments, results, and improvement suggestions.
 
 `RV Segmentation Presentation.pdf`: Project presentation slides. *(useful for a quick overview)*.
 
