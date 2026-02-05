@@ -2,7 +2,7 @@
 ## Project Overview
 This project implements automated **right ventricle (RV) segmentation** in **cardiac MRI**. The RV plays a key role in circulation by pumping deoxygenated blood to the lungs, yet it has historically received less attention than the left ventricle in segmentation research due to its thin wall and irregular/complex geometry (often referred to as the “forgotten ventricle”). RV morphology and function can be prognostically relevant in several cardiac conditions (e.g., congenital arrhythmogenesis, right-ventricular cardiomyopathy), and more precise RV quantification could support earlier diagnosis and monitoring.
 
-The segmentation approach is a **compact SegFormer3D-based** model inspired by Perera et al. (2024), using a **4-stage hierarchical Transformer encoder** and a **lightweight MLP-style decoder** to produce RV masks. The model is trained and evaluated on the public **M&Ms-2** challenge dataset, with results reported separately for short-axis (SA) and long-axis (LA) views.
+The segmentation approach is a **compact SegFormer3D-based** model inspired by [Perera et al. (2024)](https://ieeexplore.ieee.org/document/10678245), using a **4-stage hierarchical Transformer encoder** and a **lightweight MLP-style decoder** to produce RV masks. The model is trained and evaluated on the public **M&Ms-2** challenge dataset, with results reported separately for short-axis (SA) and long-axis (LA) views.
 
 
 ## Repository Structure
@@ -16,7 +16,7 @@ The segmentation approach is a **compact SegFormer3D-based** model inspired by P
 
 
 ## Data Description
-**Dataset:** Multi-Disease, Multi-View & Multi-Center Right Ventricular Segmentation in Cardiac MRI (M&Ms-2) – a public challenge dataset for RV segmentation, released by the University of Barcelona (2021).
+**Dataset:** [Multi-Disease, Multi-View & Multi-Center Right Ventricular Segmentation in Cardiac MRI (M&Ms-2)](https://www.ub.edu/mnms-2/) – a public challenge dataset for RV segmentation, released by the University of Barcelona (2021).
 
 **Scope:** 360 cardiac MRI studies (patient scans) from 3 different health centers (acquired on 9 MRI scanners), covering patients with 8 different cardiac conditions and healthy controls.
 
@@ -36,6 +36,41 @@ The segmentation approach is a **compact SegFormer3D-based** model inspired by P
 - **Evaluation**
 
 ## Results
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2" style="text-align:left;">Metrics</th>
+      <th colspan="2" style="text-align:center;">Our SegFormer3D model</th>
+      <th colspan="2" style="text-align:center;">
+        nnU-Net ViT + ResBlocks + PReLU activation<br>
+        (<a href="https://reference-global.com/article/10.2478/acss-2025-0002">Ayoob et&nbsp;al.,&nbsp;2025</a>)
+      </th>
+    </tr>
+    <tr>
+      <th style="text-align:center;">SA</th>
+      <th style="text-align:center;">LA</th>
+      <th style="text-align:center;">SA</th>
+      <th style="text-align:center;">LA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left;">Dice score</td>
+      <td style="text-align:center;">0.5568</td>
+      <td style="text-align:center;">0.8964</td>
+      <td style="text-align:center;">0.9096</td>
+      <td style="text-align:center;">0.8930</td>
+    </tr>
+    <tr>
+      <td style="text-align:left;">Hausdorff distance</td>
+      <td style="text-align:center;">76.8162</td>
+      <td style="text-align:center;">62.4874</td>
+      <td style="text-align:center;">66.4372</td>
+      <td style="text-align:center;">15.6076</td>
+    </tr>
+  </tbody>
+</table>
+
 
 
 
