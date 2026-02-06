@@ -26,7 +26,7 @@ The segmentation approach is a **compact SegFormer3D-based** model inspired by [
 
 **Annotations:** All scans include expert-labeled RV segmentation masks, used as ground truth for supervised learning.
 
-**Data split used:** 144/144/72 studies for train/validation/test. Separate models were trained for SA and LA subsets to account for view-specific image characteristics.
+**Data split used:** 40%/40%/20% (144/144/72) studies for train/validation/test. Separate models were trained for SA and LA subsets to account for view-specific image characteristics.
 
 
 ## Project Workflow
