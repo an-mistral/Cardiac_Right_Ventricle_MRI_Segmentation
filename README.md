@@ -10,7 +10,7 @@ The segmentation approach is a **compact SegFormer3D-based** model inspired by [
 
 `RV Segmentation Report.pdf`: Comprehensive report detailing the project’s background, methodology, experiments, results, and improvement suggestions.
 
-`RV Segmentation Presentation.pdf`: Project presentation slides. *(useful for a quick overview)*.
+`RV Segmentation Presentation.pdf`: Project presentation slides. *(useful for a quick overview)*
 
 `References.bib`: BibTeX file listing literature references cited in the report.
 
@@ -18,13 +18,13 @@ The segmentation approach is a **compact SegFormer3D-based** model inspired by [
 ## Data Description
 **Dataset:** [Multi-Disease, Multi-View & Multi-Center Right Ventricular Segmentation in Cardiac MRI (M&Ms-2)](https://www.ub.edu/mnms-2/) – a public challenge dataset for RV segmentation, released by the University of Barcelona (2021).
 
-**Scope:** 360 cardiac MRI studies (patient scans) from 3 different health centers (acquired on 9 MRI scanners), covering patients with 8 different cardiac conditions and healthy controls.
+**Scope:** 360 cardiac MRI studies (patient scans) from 3 different health centers (acquired on 9 MRI scanners), covering patients with 8 different cardiac conditions, and healthy controls.
 
 **Views:** Each study provides two complementary imaging orientations:
   - Short-Axis (SA): a stack of 2D slices in cross-section
   - Long-Axis (LA): a cine long-axis view
 
-**Annotations:** All scans include expert-labeled RV segmentation masks, used as ground truth for supervised learning.
+**Annotations:** All scans include expert-labeled RV segmentation masks, used as the ground truth for supervised learning.
 
 
 ## Project Workflow
@@ -37,7 +37,7 @@ The segmentation approach is a **compact SegFormer3D-based** model inspired by [
 - **Augmentation (train only):**
   - Spatial transforms (image + mask):
     - *RandomFlip* (p=0.3): x/y axes flip
-    - *RandomAffine* (p=0.3): light transformations including a ≤4% zoom-in, ≤3° in-plane rotation, small in-plane translations
+    - *RandomAffine* (p=0.3): light transformations including a ≤4% zoom-in, ≤3° in-plane rotation, and small in-plane translations
   - Intensity transforms (image only):
     - *RandomNoise* (p=0.2): Gaussian noise with σ ∈ [0, 0.01]
     - *RandomGamma* (p=0.15): contrast adjustment with log-gamma ∈ [-0.12, 0.12]
@@ -85,11 +85,11 @@ The segmentation approach is a **compact SegFormer3D-based** model inspired by [
 
 ### Evaluation
 - **Test data:** Held-out test set 
-- **Prediction binarization:** Sigmoid output thresholded at 0.5 to yield binary segmentation mask
+- **Prediction binarization:** Sigmoid output thresholded at 0.5 to yield a binary segmentation mask
 - **Metrics:** Computed per sample, then averaged across test set
   - *Dice Coefficient:* overlap accuracy between predicted and ground-truth RV masks
   - *95th percentile Hausdorff Distance:* boundary discrepancy at the 95% cutoff (robust to outliers); computed only when both GT and prediction contain foreground
-  - *Precision / Recall / F1:* computed voxel-wise from binarized masks (flattened)
+  - *Precision / Recall / F1:* computed voxel-wise from the binarized masks (flattened)
 - **Tools:** MONAI (HD95) and scikit-learn (precision/recall/F1)
 
 
@@ -131,17 +131,17 @@ The segmentation approach is a **compact SegFormer3D-based** model inspired by [
 
 **Long-Axis (LA) View:**
 
-- High Dice score (~0.90) → indicates strong volumetric overlap with ground truth RV regions
+- High Dice score (~0.90) → indicates strong volumetric overlap with the ground truth RV regions
 - Precision is modest while Recall is high → model detects most RV pixels (sensitive) but includes some false positives
 - HD95 distance remains elevated (∼62 mm) → suggests localized boundary misalignments still occur
-- Competitive with nnU-Net ViT on overlap (Dice) metrics, but higher Hausdorff implies less precise boundaries
+- Competitive with nnU-Net ViT on overlap (Dice) metrics, but a higher Hausdorff implies less precise boundaries
 
 **Strength:** Lightweight transformer achieves near-SOTA Dice with substantially lower computational cost.
 
 **Short-Axis (SA) View:**
 
-- Moderate Dice score (~0.56) → segmentation quality is less consistent compared to LA view
-- Low precision and recall → indicates both false positives and false negatives are frequent
+- Moderate Dice score (~0.56) → segmentation quality is less consistent compared to the LA view
+- Low precision and recall → indicates that both false positives and false negatives are frequent
 - High HD95 (~77 mm) → poor boundary alignment, likely due to the higher variability in slice orientations
 - Underperforms relative to nnU-Net ViT baseline → model lacks robustness for the greater anatomical variability in this view
 
