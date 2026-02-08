@@ -16,36 +16,36 @@ The segmentation approach is a **compact SegFormer3D-based** model inspired by [
 
 
 ## Data Description
-**Dataset:** [Multi-Disease, Multi-View & Multi-Center Right Ventricular Segmentation in Cardiac MRI (M&Ms-2)](https://www.ub.edu/mnms-2/) – a public challenge dataset for RV segmentation, released by the University of Barcelona (2021)
+**Dataset:** [Multi-Disease, Multi-View & Multi-Center Right Ventricular Segmentation in Cardiac MRI (M&Ms-2)](https://www.ub.edu/mnms-2/) – a public challenge dataset for RV segmentation, released by the University of Barcelona (2021).
 
-**Scope:** 360 cardiac MRI studies (patient scans) from 3 different health centers (acquired on 9 MRI scanners), covering patients with 8 different cardiac conditions and healthy controls
+**Scope:** 360 cardiac MRI studies (patient scans) from 3 different health centers (acquired on 9 MRI scanners), covering patients with 8 different cardiac conditions and healthy controls.
 
 **Views:** Each study provides two complementary imaging orientations:
   - Short-Axis (SA): a stack of 2D slices in cross-section
   - Long-Axis (LA): a cine long-axis view
 
-**Annotations:** All scans include expert-labeled RV segmentation masks, used as ground truth for supervised learning
+**Annotations:** All scans include expert-labeled RV segmentation masks, used as ground truth for supervised learning.
 
 
 ## Project Workflow
 ### Data Preprocessing & Augmentation
-- **Input format:** SA/LA cardiac MRI slices (single-channel), processed in a quasi-2D setup (D=1)
+- **Input format:** SA/LA cardiac MRI slices (single-channel), processed in a quasi-2D setup (D=1).
 - **Preprocessing (applied to train/val/test):** 
   - Resample to a fixed voxel spacing (1.25, 1.25, 5.0 mm)
   - CropOrPad to (256, 256, 1)
   - Z-score normalization    
 - **Augmentation (train only):**
-  - **Spatial transforms (image + mask):**
+  - Spatial transforms (image + mask):
     - *RandomFlip* (p=0.3): x/y axes flip
     - *RandomAffine* (p=0.3): light transformations including a ≤4% zoom-in, ≤3° in-plane rotation, small in-plane translations
-  - **Intensity transforms (image only):**
+  - Intensity transforms (image only):
     - *RandomNoise* (p=0.2): Gaussian noise with σ ∈ [0, 0.01]
     - *RandomGamma* (p=0.15): contrast adjustment with log-gamma ∈ [-0.12, 0.12]
     - *RandomBiasField* (p=0.15): mild B1 inhomogeneity simulation
 
 ### Model Architecture
-- **Backbone:** Compact 3D SegFormer-style segmentation Transformer (inspired by [Perera et al. (2024)](https://ieeexplore.ieee.org/document/10678245)) 
-- **Core idea:** no convoluted decoders, no UNet-style skip connections, just a straight-through Transformer with multi-scale outputs feeding into a slim decoder. Therefore, it remains efficient (≈ 3.9M params) while preserving strong multi-scale context
+- **Backbone:** Compact 3D SegFormer-style segmentation Transformer (inspired by [Perera et al. (2024)](https://ieeexplore.ieee.org/document/10678245)).
+- **Core idea:** no convoluted decoders, no UNet-style skip connections, just a straight-through Transformer with multi-scale outputs feeding into a slim decoder. Therefore, it remains efficient (≈ 3.9M params) while preserving strong multi-scale context.
 - **Encoder:** 
   - 4-stage MiT pyramid: channels 32 → 64 → 160 → 256
   - Overlapping 3 × 3 × 3 patch embedding, stride (2,2,1) + LayerNorm
@@ -129,23 +129,23 @@ The segmentation approach is a **compact SegFormer3D-based** model inspired by [
   </tbody>
 </table>
 
-**Long-Axis (LA) View**
+**Long-Axis (LA) View:**
 
 - High Dice score (~0.90) → indicates strong volumetric overlap with ground truth RV regions
 - Precision is modest while Recall is high → model detects most RV pixels (sensitive) but includes some false positives
 - HD95 distance remains elevated (∼62 mm) → suggests localized boundary misalignments still occur
 - Competitive with nnU-Net ViT on overlap (Dice) metrics, but higher Hausdorff implies less precise boundaries
 
-**Strength:** Lightweight transformer achieves near-SOTA Dice with substantially lower computational cost
+**Strength:** Lightweight transformer achieves near-SOTA Dice with substantially lower computational cost.
 
-**Short-Axis (SA) View**
+**Short-Axis (SA) View:**
 
 - Moderate Dice score (~0.56) → segmentation quality is less consistent compared to LA view
 - Low precision and recall → indicates both false positives and false negatives are frequent
 - High HD95 (~77 mm) → poor boundary alignment, likely due to the higher variability in slice orientations
 - Underperforms relative to nnU-Net ViT baseline → model lacks robustness for the greater anatomical variability in this view
 
-**Insight:** SA view exhibits more complex shape changes, suggesting the model might benefit from view-specific tuning or multi-view fusion strategies
+**Insight:** SA view exhibits more complex shape changes, suggesting the model might benefit from view-specific tuning or multi-view fusion strategies.
 
 These findings highlight the model’s strengths in resource-constrained scenarios (lightweight architecture) in comparison to heavier models and identify some possibility to enhance the model, like integrating mechanisms or advanced activations.
 
